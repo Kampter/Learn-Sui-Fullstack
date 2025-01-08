@@ -1,0 +1,14 @@
+[package]
+name = "distributed_counter"
+edition = "2024.beta" 
+version = "0.0.1"
+license = "MIT"
+authors = ["Kampter"]
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/testnet" }
+
+[addresses]
+distributed_counter = "0x0"
+
+
