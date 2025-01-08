@@ -52,6 +52,8 @@ public fun sword_create(magic: u64, strength: u64, ctx: &mut TxContext): Sword {
     }
 }
 
+
+
 /// Constructor for creating swords
 public fun new_sword(
     forge: &mut Forge,

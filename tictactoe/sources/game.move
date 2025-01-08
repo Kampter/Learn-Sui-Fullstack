@@ -1,4 +1,4 @@
-module tictactoe::game {
+module tictactoe::game;
     use sui::event;
     use sui::transfer::Receiving; 
 
@@ -239,4 +239,4 @@ module tictactoe::game {
 
         false
     }
-}
+
