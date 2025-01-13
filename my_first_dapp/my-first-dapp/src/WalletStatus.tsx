@@ -1,6 +1,7 @@
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { OwnedObjects } from "./OwnedObjects";
+import { Button } from "./components/ui/button";
 
 export function WalletStatus() {
   const account = useCurrentAccount();
@@ -32,6 +33,7 @@ export function WalletStatus() {
           </Text>
         )}
       </Flex>
+      <Button variant="outline">Button</Button>
 
       {/* Objects List */}
       <Box>

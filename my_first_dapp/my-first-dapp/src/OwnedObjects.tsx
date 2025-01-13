@@ -40,12 +40,14 @@ export function OwnedObjects() {
           <Box
             key={object.data?.objectId}
             p="4"
-            className="nft-box"
             style={{
               background: "rgba(255, 255, 255, 0.03)",
               borderRadius: "12px",
               transition: "background 0.2s ease",
               cursor: "pointer",
+              ":hover": {
+                background: "rgba(255, 255, 255, 0.05)",
+              },
             }}
           >
             <Text
