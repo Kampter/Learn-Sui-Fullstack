@@ -1,0 +1,20 @@
+{
+    "plugins": [
+        {
+            "type": "add",
+            "pluginName": "fleet.react"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.tailwindcss"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.toml"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.rust.ai"
+        }
+    ]
+}
