@@ -5,7 +5,7 @@ use std::string::String;
 use sui::coin::{Self, Coin};
 use std::type_name::{Self, TypeName};
 use sui::event;
-use sui::dynamic_field;
+use sui::dynamic_field;  
 use std::ascii::String as ASCIIString;
 
 const EProfileExists: u64 = 1;
@@ -47,12 +47,11 @@ fun init(ctx: &mut TxContext) {
         id: object::new(ctx),
         owner: table::new(ctx),
     };
-    let sender = ctx.sender();
-    transfer::transfer(wallet, sender);
+    transfer::share_object(wallet);
 }
 
 public entry fun create_profile(wallet: &mut Wallet, name: String, description: String, ctx: &mut TxContext) {
-    assert!(table::contains(&wallet.owner, ctx.sender()), EProfileExists);
+    assert!(!table::contains(&wallet.owner, ctx.sender()), EProfileExists);
 
     let profile = Profile {
         id: object::new(ctx),
@@ -81,7 +80,7 @@ public entry fun create_coin_vault(wallet: &mut Wallet, ctx: &mut TxContext) {
     });
 }
 
-public fun add_coin_to_vault<T>(coin_vault: &mut CoinVault, coin: Coin<T>, ctx: &mut TxContext) {
+public fun add_coin_to_vault<T>(coin_vault: &mut CoinVault, coin: Coin<T>, _ctx: &mut TxContext) {
     let name = type_name::get<T>();
     let amount = coin::value(&coin);
     let total;
@@ -90,7 +89,7 @@ public fun add_coin_to_vault<T>(coin_vault: &mut CoinVault, coin: Coin<T>, ctx: 
         dynamic_field::add(&mut coin_vault.id, name, coin::into_balance(coin));
         total = amount;
     } else {
-        let coin_store = dynamic_field::borrow_mut<TypeName, Coin<T>>(&mut coin_vault.id, type_name);
+        let coin_store = dynamic_field::borrow_mut<TypeName, Coin<T>>(&mut coin_vault.id, name);
         coin::join(coin_store, coin);
         total = coin::value(coin_store);
     };
