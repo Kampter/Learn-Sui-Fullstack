@@ -7,6 +7,7 @@ use std::type_name::{Self, TypeName};
 use sui::event;
 use sui::dynamic_field;  
 use std::ascii::String as ASCIIString;
+// use std::debug;
 
 const EProfileExists: u64 = 1;
 
@@ -67,6 +68,11 @@ public entry fun create_profile(wallet: &mut Wallet, name: String, description: 
     });
 }
 
+public fun update_profile(profile: &mut Profile, name: String, description: String){
+    profile.name = name;
+    profile.description = description;
+}
+
 public entry fun create_coin_vault(wallet: &mut Wallet, ctx: &mut TxContext) {
     let coin_vault = CoinVault {
         id: object::new(ctx),
@@ -83,30 +89,36 @@ public entry fun create_coin_vault(wallet: &mut Wallet, ctx: &mut TxContext) {
 public fun add_coin_to_vault<T>(coin_vault: &mut CoinVault, coin: Coin<T>, _ctx: &mut TxContext) {
     let name = type_name::get<T>();
     let amount = coin::value(&coin);
-    let total;
+    let balance;
 
     if (!dynamic_field::exists_(&coin_vault.id, name)) {
-        dynamic_field::add(&mut coin_vault.id, name, coin::into_balance(coin));
-        total = amount;
+        dynamic_field::add(&mut coin_vault.id, name, coin);
+        balance = amount;
     } else {
         let coin_store = dynamic_field::borrow_mut<TypeName, Coin<T>>(&mut coin_vault.id, name);
         coin::join(coin_store, coin);
-        total = coin::value(coin_store);
+        balance = coin::value(coin_store);
     };
-
-    event::emit(CoinAdded {
+    
+    let coin_added_event = CoinAdded {
         coin_vault: object::uid_to_address(&coin_vault.id),
         coin_type: type_name::into_string(name),
         amount,
-        balance: total,
-    });
+        balance: balance,
+    };
+    event::emit(coin_added_event);
+}
+
+public fun get_coin_vault_balance<T>(coin_vault: &CoinVault): u64 {
+    let name = type_name::get<T>();
+    if (!dynamic_field::exists_(&coin_vault.id, name)) {
+        return 0
+    };
+    let value = dynamic_field::borrow<TypeName, Coin<T>>(&coin_vault.id, name);
+    coin::value(value)
 }
 
 
-public fun update_profile(profile: &mut Profile, name: String, description: String){
-    profile.name = name;
-    profile.description = description;
-}
 
 
 #[test_only]
