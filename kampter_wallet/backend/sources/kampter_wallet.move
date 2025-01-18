@@ -13,7 +13,7 @@ const EProfileExists: u64 = 1;
 
 public struct Wallet has key {
     id: UID,
-    owner: Table<address, address>, // mapping from owner to profile and assets valut address
+    owner: Table<address, address>, // mapping from owner to profile and coin valut address
 }
 
 public struct Profile has key {
