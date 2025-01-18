@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { useEffect } from "react";
-import { WalletStatus } from "@/components/wallet-status" // Ensure correct import path
-import Footer from "@/components/footer";
-import NaviBar from "@/components/navi-bar";
+import { WalletStatus } from "@/components/wallet-status"; // Ensure correct import path
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,14 +14,11 @@ const Login = () => {
   }, [account, navigate]);
 
   return (
-    <div>
-        <NaviBar />
-        <div className="flex flex-col items-center justify-center h-full">
-            <WalletStatus />
-        </div>
-        <Footer />
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow flex flex-col items-center justify-center">
+        <WalletStatus />
+      </div>
     </div>
-    
   );
 };
 

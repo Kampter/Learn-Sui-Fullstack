@@ -5,7 +5,7 @@ const NaviBar = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="border-b">
+    <header className="border-b relative z-50"> {/* Ensure header is on top */}
       <div className="container mx-auto p-4">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2 hover:cursor-pointer" onClick={() => navigate("/login")}>
@@ -13,7 +13,9 @@ const NaviBar = () => {
               Sui Assets Manager
             </span>
           </div>
-          <ConnectButton />
+          <div className="relative z-50"> {/* Ensure ConnectButton is on top */}
+            <ConnectButton />
+          </div>
         </div>
       </div>
     </header>
