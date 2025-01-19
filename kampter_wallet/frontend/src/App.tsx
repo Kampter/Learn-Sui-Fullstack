@@ -1,38 +1,19 @@
-import { ConnectButton } from "@mysten/dapp-kit";
-import { Box, Container, Flex, Heading } from "@radix-ui/themes";
-import { WalletStatus } from "./Components/WalletStatus";
+import { Theme } from "@radix-ui/themes";
+import AppRouter from "./Components/AppRouter";
+import NavigatorBar from "./Components/NavigatorBar";
+import Footer from "./Components/footer";
 
 function App() {
   return (
-    <>
-      <Flex
-        position="sticky"
-        px="4"
-        py="2"
-        justify="between"
-        style={{
-          borderBottom: "1px solid var(--gray-a2)",
-        }}
-      >
-        <Box>
-          <Heading>dApp Starter Template</Heading>
-        </Box>
-
-        <Box>
-          <ConnectButton />
-        </Box>
-      </Flex>
-      <Container>
-        <Container
-          mt="5"
-          pt="2"
-          px="4"
-          style={{ background: "var(--gray-a2)", minHeight: 500 }}
-        >
-          <WalletStatus />
-        </Container>
-      </Container>
-    </>
+    <Theme appearance="dark">
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "#121212" }}>
+        <NavigatorBar />
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          <AppRouter />
+        </div>
+        <Footer />
+      </div>
+    </Theme>
   );
 }
 
