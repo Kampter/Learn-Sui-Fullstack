@@ -1,24 +1,38 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Main from "./pages/Main";
-import NaviBar from "./components/navi-bar";
-import Footer from "./components/footer";
+import { ConnectButton } from "@mysten/dapp-kit";
+import { Box, Container, Flex, Heading } from "@radix-ui/themes";
+import { WalletStatus } from "./Components/WalletStatus";
 
 function App() {
-  return (    
-    <Router>
-      <div className="bg-background min-h-screen flex flex-col">
-        <NaviBar />
-        <div className="flex-grow">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/main" element={<Main />} />
-            <Route path="*" element={<Navigate to="/login" />} /> {/* Default route */}
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </Router>
+  return (
+    <>
+      <Flex
+        position="sticky"
+        px="4"
+        py="2"
+        justify="between"
+        style={{
+          borderBottom: "1px solid var(--gray-a2)",
+        }}
+      >
+        <Box>
+          <Heading>dApp Starter Template</Heading>
+        </Box>
+
+        <Box>
+          <ConnectButton />
+        </Box>
+      </Flex>
+      <Container>
+        <Container
+          mt="5"
+          pt="2"
+          px="4"
+          style={{ background: "var(--gray-a2)", minHeight: 500 }}
+        >
+          <WalletStatus />
+        </Container>
+      </Container>
+    </>
   );
 }
 
