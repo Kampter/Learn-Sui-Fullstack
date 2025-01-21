@@ -1,8 +1,8 @@
-import  { SUI_CLIENT }  from  './suiClient';
+import  { suiClient }  from  './suiClient';
 
-export const SUI_SERVICE = {
+export const suiService = {
     async getFormattedBalance (owner: string) {
-        const balance = await SUI_CLIENT.getBalance({
+        const balance = await suiClient.getBalance({
             owner: owner,
         });
         return Number(Number(balance.totalBalance) / 1000_000_000).toFixed(2);

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Notification } from "./components/utils/Notifications";
 import "./App.css";
-import AuthService from "./services/AuthService";
-import SUI_SERVICE from "./services/suiClient";
+import AuthService from "./components/utils/AuthService";
+import SuiService from "./components/utils/suiService";
 import { Container, Nav } from "react-bootstrap";
 import Wallet from "./components/Wallet";
-import Notes from "./components/Notes";
-import Cover from "./components/Cover";
+import Notes from "./components/notes/Notes";
+import Cover from "./components/utils/Cover";
 import coverImg from "./assets/coverImg.jpg";
 
 const App = () => {
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState("");
-  const suiService = new SUI_SERVICE();
+  const suiService = new SuiService();
 
   const getBalance = async () => {
     try {

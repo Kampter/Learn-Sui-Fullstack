@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SUI_CLIENT } from "./suiClient";
+import { suiClient } from "./suiClient";
 import { Ed25519Keypair } from '@mysten/sui.js/keypairs/ed25519';
 import { generateNonce, generateRandomness, getExtendedEphemeralPublicKey } from '@mysten/zklogin';
 import { jwtToAddress } from '@mysten/zklogin';
@@ -122,7 +122,7 @@ export class AuthService {
     }
 
     async login() {
-        const { epoch } = await SUI_CLIENT.getLatestSuiSystemState();
+        const { epoch } = await suiClient.getLatestSuiSystemState();
 
         const maxEpoch = Number(epoch) + 2222;
         const ephemeralKeyPair = new Ed25519Keypair();

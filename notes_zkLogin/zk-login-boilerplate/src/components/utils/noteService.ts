@@ -1,9 +1,9 @@
 import { TransactionBlock } from "@mysten/sui.js/dist/cjs/builder";
-import { PACKAGE_ID, SUI_CLIENT } from "./suiClient";
+import { PACKAGE_ID, suiClient } from "./suiClient";
 import { AuthService } from "./authService";
 
 // a service to interact with the smart contract using SUI SDK
-export class NoteService {
+class NoteService {
 
     async addNote(title: string, body: string) {
         const transactionBlock = new TransactionBlock();
@@ -19,11 +19,11 @@ export class NoteService {
 
     async getNotes() {
         const sender = AuthService.walletAddress();
-        let ownedObjects = await SUI_CLIENT.getOwnedObjects({
+        let ownedObjects = await suiClient.getOwnedObjects({
             owner: sender,
         });
         let ownedObjectsDetails = await Promise.all(ownedObjects.data.map(async (object: any) => {
-            return await SUI_CLIENT.getObject({
+            return await suiClient.getObject({
                 id: object.id,
                 options: {
                     showType: true,
@@ -55,11 +55,11 @@ export class NoteService {
         transactionBlock.setSender(sender);
         transactionBlock.moveCall(transactionBlockData);
         const { bytes, signature: userSignature } = await transactionBlock.sign({
-            client: SUI_CLIENT,
+            client: suiClient,
             signer: keyPair,
         });
         const getZkLoginSignature = await AuthService.generateZkLoginSignature(userSignature);
-        return SUI_CLIENT.executeTransactionBlock({
+        return suiClient.executeTransactionBlock({
             transactionBlock: bytes,
             signature: getZkLoginSignature,
         });
