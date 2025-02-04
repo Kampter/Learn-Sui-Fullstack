@@ -1,6 +1,8 @@
 module kampter_wallet::kampter_note;
 
 use std::string::String;
+use sui::bag::{Bag, Self};
+use sui::dynamic_object_field as dofiled;
 
 public struct Notes has key {
     id: UID
